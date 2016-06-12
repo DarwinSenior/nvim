@@ -226,8 +226,6 @@ call dein#add('w0ng/vim-hybrid')
 call dein#source('w0ng/vim-hybrid')
 colorscheme hybrid
 set background=dark
-call dein#add('ryanoasis/vim-devicons')
-
 " next thing is for writing non-distracting documentation
 call dein#add('junegunn/goyo.vim', {'on_ft': ['markdown']})
 call dein#add('junegunn/limelight.vim', {'on_ft': ['markdown']})
