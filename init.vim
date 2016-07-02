@@ -7,7 +7,7 @@ set nocompatible
 set clipboard=unnamed
 syntax on
 
-let g:python_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 
 let mapleader = ' '
@@ -80,7 +80,7 @@ nnoremap * *``
 
 set runtimepath^=~/.config/nvim/repos/github.com/Shougo/dein.vim
 
-call dein#begin(expand('~/.cache/dein'))
+call dein#begin(expand('~/.config/nvim/'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
 call dein#add('taylor/vim-zoomwin')
