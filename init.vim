@@ -78,6 +78,11 @@ set smartindent
 
 nnoremap * *``
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if !exists('$TMUX')
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+endif
+
 set runtimepath^=~/.config/nvim/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.config/nvim/'))
@@ -133,7 +138,7 @@ call dein#add('dyng/ctrlsf.vim')
 " the following are something I really like
 call dein#add('google/vim-searchindex')
 call dein#add('tmhedberg/matchit')
-call dein#add('jszakmeister/vim-togglecursor')
+" call dein#add('jszakmeister/vim-togglecursor')
 call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('zhaocai/GoldenView.Vim')
@@ -205,11 +210,16 @@ call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
 call dein#add('eagletmt/ghcmod-vim', {'on_ft': ['haskell']})
 call dein#add('bitc/vim-hdevtools', {'on_ft': ['haskell']})
 call dein#add('zchee/deoplete-clang', {'on_ft': ['c', 'cpp', 'h']})
-let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm35/3.5.1/lib/llvm-3.5/lib/libclang.dylib'
-let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm35/3.5.1/lib/llvm-3.5/include/clang/'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
+" let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm35/3.5.1/lib/llvm-3.5/lib/libclang.dylib'
+" let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm35/3.5.1/lib/llvm-3.5/include/clang/'
 
 " folding
 call dein#add('Konfekt/FastFold')
+
+" call for tags
+call dein#add('bbchung/gtags.vim')
 
 " for snippet
 call dein#add('Shougo/neosnippet.vim')
