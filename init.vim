@@ -138,6 +138,7 @@ call dein#add('dyng/ctrlsf.vim')
 " the following are something I really like
 call dein#add('google/vim-searchindex')
 call dein#add('tmhedberg/matchit')
+call dein#add('wellle/targets.vim')
 " call dein#add('jszakmeister/vim-togglecursor')
 call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 call dein#add('airblade/vim-gitgutter')
@@ -183,7 +184,10 @@ call dein#add('Shougo/unite.vim')
 call dein#add('ujihisa/unite-colorscheme')
 call dein#add('tsukkee/unite-tag')
 call dein#add('Shougo/unite-outline')
+call dein#add('junegunn/fzf')
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+nnoremap <C-p> :FZF<CR>
 nmap <Leader>Fi :w<CR>:Unite file_rec/neovim<CR>i<Down><Up>
 nmap <Leader>fi :w<CR>:Unite file<CR>i
 nmap <Leader>bi :w<CR>:Unite buffer<CR>i
@@ -205,7 +209,11 @@ let g:deoplete#enable_at_startup = 1
 inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 call dein#add('Shougo/neopairs.vim')
 call dein#add('Shougo/neco-syntax')
+call dein#add('alvan/vim-closetag')
 call dein#add('carlitux/deoplete-ternjs')
+call dein#add('mhartington/deoplete-typescript')
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+
 call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
 call dein#add('eagletmt/ghcmod-vim', {'on_ft': ['haskell']})
 call dein#add('bitc/vim-hdevtools', {'on_ft': ['haskell']})
