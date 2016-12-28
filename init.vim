@@ -98,6 +98,7 @@ call dein#add('tpope/vim-abolish')
 call dein#add('tpope/vim-commentary')
 call dein#add('tpope/vim-unimpaired')
 
+call dein#add('jreybert/vimagit')
 " for appearance
 call dein#add('kien/rainbow_parentheses.vim')
 autocmd VimEnter * RainbowParenthesesToggle
