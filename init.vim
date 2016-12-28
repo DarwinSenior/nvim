@@ -76,7 +76,7 @@ set expandtab
 set autoindent
 set smartindent
 
-nnoremap * *``
+nnoremap * *#
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if !exists('$TMUX')
@@ -119,6 +119,8 @@ call dein#add('kana/vim-operator-user')
 call dein#add('kana/vim-textobj-user')
 call dein#add('glts/vim-textobj-comment')
 call dein#add('rbonvall/vim-textobj-latex')
+call dein#add('wellle/targets.vim')
+call dein#add('godlygeek/tabular')
 call dein#add('easymotion/vim-easymotion')
 map <Leader>w <Plug>(easymotion-bd-w)
 let g:EasyMotion_smartcase = 1
@@ -138,7 +140,6 @@ call dein#add('dyng/ctrlsf.vim')
 " the following are something I really like
 call dein#add('google/vim-searchindex')
 call dein#add('tmhedberg/matchit')
-call dein#add('wellle/targets.vim')
 " call dein#add('jszakmeister/vim-togglecursor')
 call dein#add('jeffkreeftmeijer/vim-numbertoggle')
 call dein#add('airblade/vim-gitgutter')
@@ -209,15 +210,17 @@ let g:deoplete#enable_at_startup = 1
 inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 call dein#add('Shougo/neopairs.vim')
 call dein#add('Shougo/neco-syntax')
+call dein#add('Shougo/echodoc.vim')
 call dein#add('alvan/vim-closetag')
-call dein#add('carlitux/deoplete-ternjs')
-call dein#add('mhartington/deoplete-typescript')
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
 call dein#add('eagletmt/ghcmod-vim', {'on_ft': ['haskell']})
 call dein#add('bitc/vim-hdevtools', {'on_ft': ['haskell']})
 call dein#add('zchee/deoplete-clang', {'on_ft': ['c', 'cpp', 'h']})
+call dein#add('carlitux/deoplete-ternjs')
+call dein#add('mhartington/deoplete-typescript')
+call dein#add('Shougo/neoinclude.vim')
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
 " let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm35/3.5.1/lib/llvm-3.5/lib/libclang.dylib'
@@ -270,10 +273,6 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-call dein#add('junegunn/vim-easy-align')
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
 
 " useful functionality
 call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})
