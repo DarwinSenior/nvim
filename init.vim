@@ -167,12 +167,16 @@ if executable('hindent')
     let g:formatdef_haskell_hindent = '"cat | hindent --style gibiansky"'
     let g:formatters_haskell = ['haskell_hindent']
 endif
+if executable('tidy')
+    let g:formatters_html = ['tidy']
+endif
+
 call dein#add('neomake/neomake')
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_typescript_enabled_makers = ['tsc']
 let g:neomake_python_enabled_makers = ['flake8', 'pep8']
 let g:neomake_json_enabled_makers = ['jsonlint']
 let g:neomake_vim_enabled_makes = ['vint']
-let g:neomake_typescript_enabled_makers = ['tsc']
 let g:neomake_html_enabled_makers = ['polylint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
@@ -182,26 +186,22 @@ let g:neomake_haskell_enabled_makers = ['hdevtools']
 
 " Unite for browsing
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-call dein#add('Shougo/unite.vim')
-call dein#add('ujihisa/unite-colorscheme')
-call dein#add('tsukkee/unite-tag')
-call dein#add('Shougo/unite-outline')
-call dein#add('junegunn/fzf')
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call dein#add('Shougo/denite.nvim')
 
 nnoremap <C-p> :FZF<CR>
-nmap <Leader>Fi :w<CR>:Unite file_rec/neovim<CR>i<Down><Up>
-nmap <Leader>fi :w<CR>:Unite file<CR>i
-nmap <Leader>bi :w<CR>:Unite buffer<CR>i
-nmap <Leader>ti :w<CR>:Unite tag<CR>i
-nmap <Leader>gi :w<CR>:Unite grep/git<CR><CR>
-nmap <Leader>oi :w<CR>:Unite outline<CR>i
+nmap <Leader>fi :w<CR>:Denite file_rec/neovim<CR>i<Down><Up>
+nmap <Leader>bi :w<CR>:Denite buffer<CR>i
+nmap <Leader>ai :w<CR>:Denite grep<CR>i
 
-if executable('ag')
     let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup','--hidden', '-g', '']
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:unite_source_grep_recursive_opt = ''
+if executable('ag')
+    call denite#custom#var('grep', 'command', ['ag'])
+	call denite#custom#var('grep', 'default_opts',
+			\ ['--follow', '--nopager', '--nogroup', '--hidden', '-g', ''])
+	call denite#custom#var('grep', 'recursive_opts', [])
+	call denite#custom#var('grep', 'pattern_opt', ['--match'])
+	call denite#custom#var('grep', 'separator', ['--'])
+	call denite#custom#var('grep', 'final_opts', [])
 endif
 
 
@@ -216,11 +216,13 @@ call dein#add('alvan/vim-closetag')
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 call dein#add('zchee/deoplete-jedi', {'on_ft': ['python']})
+call dein#add('artur-shaik/vim-javacomplete2', {'on_ft': ['java']})
 call dein#add('eagletmt/ghcmod-vim', {'on_ft': ['haskell']})
 call dein#add('bitc/vim-hdevtools', {'on_ft': ['haskell']})
 call dein#add('zchee/deoplete-clang', {'on_ft': ['c', 'cpp', 'h']})
-call dein#add('carlitux/deoplete-ternjs')
-call dein#add('mhartington/deoplete-typescript')
+call dein#add('carlitux/deoplete-ternjs', {'on_ft': ['javascript'], 'build': 'npm install -g tern'})
+" call dein#add('mhartington/deoplete-typescript')
+call dein#add('Quramy/tsuquyomi', {'on_ft': ['typescript']})
 call dein#add('Shougo/neoinclude.vim')
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
@@ -277,10 +279,6 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " useful functionality
 call dein#add('lambdalisue/vim-gista', {'on_cmd': 'Gista'})
-call dein#add('lambdalisue/vim-gista-unite', {
-    \ 'depends': 'vim-gista',
-    \ 'on_source': 'unite.vim',
-    \})
 call dein#end()
 filetype plugin indent on
 
