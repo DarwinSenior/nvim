@@ -248,16 +248,16 @@ Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 " }}}
 
 " writing documentation {{{
-Plug 'mtth/scratch.vim'
-Plug 'dhruvasagar/vim-table-mode'
+" Plug 'mtth/scratch.vim'
+Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown']}
 Plug 'dkarter/bullets.vim'
 let g:bullets_enabled_file_types = [
-    \ 'markdown',
-    \ 'text',
-    \ 'gitcommit',
-    \ 'scratch',
-    \ 'org',
-    \]
+            \ 'markdown',
+            \ 'text',
+            \ 'gitcommit',
+            \ 'scratch',
+            \ 'org',
+            \]
 
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
@@ -271,13 +271,15 @@ function! s:goyo_enter()
     set spell
     hi clear SpellBad
     hi SpellBad cterm=bold,undercurl ctermbg=224
+    setlocal b:deoplete#disable_auto_complete = 1
 endfunction
 function! s:goyo_leave()
     set scrolloff=5
-    colorscheme Tomorrow-Night
+    colorscheme monokai
     Limelight!
     call pencil#init({'wrap': 'off'})
     set nospell
+    setlocal b:deoplete#disable_auto_complete = 0
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
