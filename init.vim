@@ -34,8 +34,8 @@ set incsearch
 
 " <Ctrl-l> redraws the screen and removes any search highlighting
 " <Ctrl-L> remove not only hightlighting but also the term completely
-
 " keymapping {{{
+nmap S <nop>
 nnoremap Q @q
 nnoremap * *#
 nnoremap <silent> <C-L> :nohl<CR>
@@ -124,6 +124,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'rbonvall/vim-textobj-latex'
 Plug 'wellle/targets.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+let g:splitjoin_join_mapping = 'J'
+nnoremap S :SplitjoinSplit<CR>
 Plug 'godlygeek/tabular'
 Plug 'easymotion/vim-easymotion'
 map <Leader>w <Plug>(easymotion-bd-w)
