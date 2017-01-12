@@ -139,27 +139,10 @@ nnoremap <C-x> :VimuxCloseRunner<CR>
 Plug 'dyng/ctrlsf.vim'
 Plug 'zhaocai/GoldenView.Vim'
 let g:goldenview__enable_default_mapping = 0
-let g:goldenview__restore_urule = {
-    \   'filetype' : [
-    \     ''        ,
-    \     'qf'      , 'vimpager', 'undotree', 'tagbar',
-    \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
-    \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
-    \     'denite'  , 'scratch'
-    \   ],
-    \   'buftype' : [
-    \     'nofile'  ,
-    \   ],
-    \   'bufname' : [
-    \     'GoToFile'                  , 'diffpanel_\d\+'      ,
-    \     '__Gundo_Preview__'         , '__Gundo__'           ,
-    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' ,
-    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' ,
-    \     '__MRU_Files__' ,
-    \   ],
-    \}
 nmap <silent> [w <Plug>GoldenViewPrevious
 nmap <silent> ]w <Plug>GoldenViewNext
+nmap <silent> - <Plug>GoldenViewPrevious
+nmap <silent> _ :bnext<CR>
 nmap <silent> <C-w><C-w> <Plug>GoldenViewSplit
 " }}}
 
@@ -188,48 +171,44 @@ autocmd BufWritePre * StripWhitespace
 Plug 'Chiel92/vim-autoformat'
 nmap <Leader><Leader><Leader> :Autoformat<CR>
 let g:autoformat_verbosemode = 1
-if executable('hindent')
-    let g:formatdef_haskell_hindent = '"cat | hindent --style gibiansky"'
-    let g:formatters_haskell = ['haskell_hindent']
-endif
 if executable('tidy')
     let g:formatters_html = ['tidy']
 endif
 
 Plug 'neomake/neomake'
+" autocmd! BufWritePost * Neomake
+
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_typescript_enabled_makers = ['tsc']
-let g:neomake_python_enabled_makers = ['flake8', 'pep8']
 let g:neomake_json_enabled_makers = ['jsonlint']
 let g:neomake_vim_enabled_makes = ['vint']
-let g:neomake_html_enabled_makers = ['polylint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
-let g:neomake_rust_enabled_makers = ['cargocheck']
-let g:neomake_haskell_enabled_makers = ['hdevtools']
 " }}}
 
-" unite and magit {{{
+" denite and magit {{{
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/denite.nvim'
 Plug 'jreybert/vimagit'
 
-nmap <Leader>fi :w<CR>:Denite file_rec<CR>
-nmap <Leader>bi :w<CR>:Denite buffer<CR>
-nmap <Leader>ai :w<CR>:Denite grep<CR>
+nmap <Leader>fw :w<CR>:Denite file_rec<CR>
+nmap <Leader>bw :w<CR>:Denite buffer<CR>
+nmap <Leader>aw :w<CR>:Denite grep<CR>
+nmap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
+nmap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
+nmap <Leader>as :call GoldenView#Split()<CR>:w<CR>:Denite grep<CR>
 
-let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup','--hidden', '-g', '']
 "}}}
 
 " for completion {{{
 Plug 'Shougo/deoplete.nvim'
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
-inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/echodoc.vim'
 Plug 'alvan/vim-closetag'
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#file#enable_buffer_path = 1
+inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
@@ -243,8 +222,6 @@ Plug 'racer-rust/vim-racer', {'for': ['rust']}
 Plug 'Shougo/neoinclude.vim'
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
-let g:deoplete#sources#rust#racer_binary = '/usr/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = '/usr/src/rust/src/'
 " }}}
 
 " folding
@@ -309,3 +286,19 @@ filetype plugin indent on
 colorscheme monokai
 set background=dark
 
+hi NeomakeErrorSign     ctermfg=161
+hi NeomakeWarningSign   ctermfg=144
+hi NeomakeError     ctermfg=161
+hi NeomakeWarning   ctermfg=144
+if executable('ag')
+    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'separator', [])
+    call denite#custom#var('grep', 'default_opts',
+                \ ['--nocolor', '--nogroup'])
+endif
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+            \ [ '.git/', '.ropeproject/', '__pycache__/',
+            \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
