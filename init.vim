@@ -1,5 +1,8 @@
-"{{{ reasonable settings
+"reasonable settings {{{
 set laststatus=2
+set wildmenu
+set lazyredraw
+set showmatch
 set number
 set guitablabel=%N\ %t
 set backspace=indent,eol,start
@@ -41,8 +44,8 @@ vmap J 5j
 vmap K 5k
 vmap H 5h
 vmap L 5l
+nnoremap gV `[v`]
 " }}}
-
 
 " turn of swap files
 set noswapfile
@@ -80,8 +83,6 @@ function! FoldText()
     let expansionString = repeat(' ', w-strwidth(nblines)-strwidth(comment))
     return (comment . expansionString . nblines)
 endfunction
-set foldenable
-set foldlevelstart=10
 set foldnestmax=10
 set foldtext=FoldText()
 " }}}
@@ -238,7 +239,7 @@ Plug 'bitc/vim-hdevtools', {'for': ['haskell']}
 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
 Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
 Plug 'mhartington/deoplete-typescript', {'for': ['typescript'], 'do': 'npm install -g typescript'}
-Plug 'sebastianmarkow/deoplete-rust', {'for': ['rust']}
+Plug 'racer-rust/vim-racer', {'for': ['rust']}
 Plug 'Shougo/neoinclude.vim'
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
@@ -260,7 +261,10 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " syntax section
 Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['markdown', 'json']
 Plug 'dzeban/vim-log-syntax'
+Plug 'elzr/vim-json', {'for': 'json'}
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 " }}}
 
 " writing documentation {{{
