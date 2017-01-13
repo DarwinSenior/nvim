@@ -32,9 +32,9 @@ set hlsearch
 set incsearch
 " }}}
 
+" keymapping {{{
 " <Ctrl-l> redraws the screen and removes any search highlighting
 " <Ctrl-L> remove not only hightlighting but also the term completely
-" keymapping {{{
 nmap S <nop>
 nnoremap Q @q
 nnoremap * *#
@@ -96,6 +96,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-speeddating'
 " }}}
 
 " for appearance {{{
@@ -257,8 +258,12 @@ let g:bullets_enabled_file_types = [
             \ 'gitcommit',
             \ 'scratch',
             \ 'org',
+            \ 'notes'
             \]
-
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
+Plug 'utl.vim'
+let g:notes_directories = ['~/workspace/notes/']
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
 Plug 'reedes/vim-pencil', {'for': 'markdown'}
