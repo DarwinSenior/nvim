@@ -216,7 +216,7 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
 Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-Plug 'eagletmt/ghcmod-vim', {'for': ['haskell']}
+Plug 'eagletmt/neco-ghc', {'for': ['haskell']}
 Plug 'bitc/vim-hdevtools', {'for': ['haskell']}
 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
 Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
@@ -294,7 +294,9 @@ set background=dark
 hi NeomakeErrorSign     ctermfg=161
 hi NeomakeWarningSign   ctermfg=144
 hi NeomakeError     ctermfg=161
-hi NeomakeWarning   ctermfg=144
+hi NeomakeWarning   ctermfg=14
+hi link deniteMatchedChar String
+
 if executable('ag')
     call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
     call denite#custom#var('grep', 'command', ['ag'])
@@ -307,3 +309,5 @@ endif
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
             \ [ '.git/', '.ropeproject/', '__pycache__/',
             \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
