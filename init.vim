@@ -266,7 +266,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'utl.vim'
 Plug 'VOoM'
-let g:notes_directories = ['~/workspace/notes/']
+let g:notes_directories = ['~/workspace/notes/notefiles']
 let g:notes_tab_indents = 0
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
