@@ -184,7 +184,6 @@ Plug 'neomake/neomake'
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_typescript_enabled_makers = ['tsc']
 let g:neomake_json_enabled_makers = ['jsonlint']
-let g:neomake_vim_enabled_makes = ['vint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 " }}}
@@ -243,8 +242,10 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown', 'json']
 Plug 'dzeban/vim-log-syntax'
+Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
 Plug 'elzr/vim-json', {'for': 'json'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
 " }}}
 
 " writing documentation {{{

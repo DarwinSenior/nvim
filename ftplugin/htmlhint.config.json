@@ -1,0 +1,15 @@
+{
+  "tagname-lowercase": true,
+  "attr-lowercase": ["viewBox", "*NgIf", "*NgFor", "NgClass"],
+  "attr-value-double-quotes": true,
+  "doctype-first": false,
+  "spec-char-escape": true,
+  "id-unique": true,
+  "src-not-empty": true,
+  "href-abs-or-rel": "rel",
+  "attr-no-duplication": true,
+  "tag-pair": true,
+  "title-require": true,
+  "attr-unsafe-chars": true,
+  "space-tab-mixed-disabled": "space"
+}
