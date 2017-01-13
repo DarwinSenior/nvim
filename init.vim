@@ -239,6 +239,7 @@ Plug 'Shougo/neosnippet-snippets'
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
+let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown', 'json']
@@ -264,7 +265,9 @@ let g:bullets_enabled_file_types = [
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'utl.vim'
+Plug 'VOoM'
 let g:notes_directories = ['~/workspace/notes/']
+let g:notes_tab_indents = 0
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
 Plug 'reedes/vim-pencil', {'for': 'markdown'}
