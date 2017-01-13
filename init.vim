@@ -268,11 +268,11 @@ function! s:goyo_enter()
     set background=light
     Limelight
     call pencil#init({'wrap': 'soft'})
-    colorscheme Tomorrow
+    colorscheme monokai
     set spell
     hi clear SpellBad
     hi SpellBad cterm=bold,undercurl ctermbg=224
-    setlocal b:deoplete#disable_auto_complete = 1
+    call deoplete#disable()
 endfunction
 function! s:goyo_leave()
     set scrolloff=5
@@ -280,7 +280,7 @@ function! s:goyo_leave()
     Limelight!
     call pencil#init({'wrap': 'off'})
     set nospell
-    setlocal b:deoplete#disable_auto_complete = 0
+    call deoplete#enable()
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
