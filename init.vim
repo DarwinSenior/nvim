@@ -74,6 +74,7 @@ if !exists('$TMUX')
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
 
+
 " folding {{{
 function! FoldText()
     let nblines = '['.(v:foldend - v:foldstart + 1).' lines]'
@@ -86,7 +87,6 @@ endfunction
 set foldnestmax=10
 set foldtext=FoldText()
 " }}}
-
 
 call plug#begin('~/.config/nvim/plug')
 " tpope classical plugins {{{
@@ -104,6 +104,7 @@ Plug 'tpope/vim-speeddating'
 " Plug 'w0ng/vim-hybrid'
 Plug 'crusoexia/vim-monokai'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'mhinz/vim-startify'
 autocmd VimEnter * RainbowParenthesesToggle
 autocmd Syntax * RainbowParenthesesLoadRound
 autocmd Syntax * RainbowParenthesesLoadSquare
@@ -164,7 +165,6 @@ Plug 'tmhedberg/matchit'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'airblade/vim-gitgutter'
-Plug 'Yggdroot/indentLine'
 Plug 'danro/rename.vim'
 Plug 'ntpeters/vim-better-whitespace'
 highlight ExtraWhitespace ctermbg=Black
@@ -197,6 +197,7 @@ Plug 'jreybert/vimagit'
 nmap <Leader>fw :w<CR>:Denite file_rec<CR>
 nmap <Leader>bw :w<CR>:Denite buffer<CR>
 nmap <Leader>aw :w<CR>:Denite grep<CR>
+nmap <Leader>tt :Denite outline<CR>
 nmap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
 nmap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
 nmap <Leader>as :call GoldenView#Split()<CR>:w<CR>:Denite grep<CR>
@@ -231,7 +232,8 @@ let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
 Plug 'Konfekt/FastFold'
 
 " call for tags
-Plug 'bbchung/gtags.vim'
+Plug 'majutsushi/tagbar'
+nmap gt :TagbarToggle<CR>
 
 " snippet and file types {{{
 Plug 'Shougo/neosnippet.vim'
@@ -247,6 +249,8 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
 Plug 'elzr/vim-json', {'for': 'json'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
+let g:colorizer_auto_filetype = 'css,html'
 Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
 " }}}
 
@@ -263,11 +267,14 @@ let g:bullets_enabled_file_types = [
             \ 'notes'
             \]
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-notes'
+Plug 'git@github.com:DarwinSenior/vim-notes.git', {'branch': 'development'}
 Plug 'utl.vim'
+nnoremap gx :Utl<CR>
 Plug 'VOoM'
 let g:notes_directories = ['~/workspace/notes/notefiles']
 let g:notes_tab_indents = 0
+let g:notes_suffix = '.notes'
+let g:notes_smart_quotes = 0
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
 Plug 'reedes/vim-pencil', {'for': 'markdown'}
