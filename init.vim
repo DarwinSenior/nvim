@@ -142,6 +142,7 @@ nnoremap <C-y> :VimuxPromptCommand <CR>
 nnoremap <C-c> "vyip}:VimuxRunCommand @v<CR>
 nnoremap <C-x> :VimuxCloseRunner<CR>
 Plug 'dyng/ctrlsf.vim'
+Plug 'qpkorr/vim-bufkill'
 Plug 'zhaocai/GoldenView.Vim'
 let g:goldenview__enable_default_mapping = 0
 nmap <silent> [w <Plug>GoldenViewPrevious
@@ -256,7 +257,8 @@ Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
 
 " writing documentation {{{
 " Plug 'mtth/scratch.vim'
-Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown']}
+Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'notes']}
+let g:table_mode_corner="|"
 Plug 'dkarter/bullets.vim'
 let g:bullets_enabled_file_types = [
             \ 'markdown',
@@ -275,23 +277,20 @@ let g:notes_directories = ['~/workspace/notes/notefiles']
 let g:notes_tab_indents = 0
 let g:notes_suffix = '.notes'
 let g:notes_smart_quotes = 0
-Plug 'junegunn/goyo.vim', {'for': 'markdown'}
-Plug 'junegunn/limelight.vim', {'for': 'markdown'}
-Plug 'reedes/vim-pencil', {'for': 'markdown'}
+Plug 'junegunn/goyo.vim', {'for': ['markdown', 'notes']}
+Plug 'junegunn/limelight.vim', {'for': ['markdown', 'notes']}
+Plug 'reedes/vim-pencil', {'for': ['markdown', 'notes']}
 function! s:goyo_enter()
     set scrolloff=999
     set background=light
     Limelight
     call pencil#init({'wrap': 'soft'})
-    colorscheme monokai
     set spell
     hi clear SpellBad
-    hi SpellBad cterm=bold,undercurl ctermbg=224
     call deoplete#disable()
 endfunction
 function! s:goyo_leave()
     set scrolloff=5
-    colorscheme monokai
     Limelight!
     call pencil#init({'wrap': 'off'})
     set nospell
@@ -327,3 +326,5 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
             \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
+
+autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
