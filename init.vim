@@ -275,6 +275,7 @@ let g:notes_directories = ['~/workspace/notes/notefiles']
 let g:notes_tab_indents = 0
 let g:notes_suffix = '.notes'
 let g:notes_smart_quotes = 0
+let g:notes_word_boundaries = 1
 Plug 'junegunn/goyo.vim', {'for': 'markdown'}
 Plug 'junegunn/limelight.vim', {'for': 'markdown'}
 Plug 'reedes/vim-pencil', {'for': 'markdown'}

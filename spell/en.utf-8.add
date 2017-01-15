@@ -1,2 +1,9 @@
 vim
 webkit
+plugin
+app
+gui
+neovim
+stdin
+stdout
+json
