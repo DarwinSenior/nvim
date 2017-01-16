@@ -1,6 +1,12 @@
 vim
 webkit
 plugin
+app
+gui
+neovim
+stdin
+stdout
+json
 vim
 regex
 cheatsheet
