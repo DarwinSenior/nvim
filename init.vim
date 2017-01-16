@@ -9,7 +9,6 @@ set backspace=indent,eol,start
 set whichwrap+=<,>,h,l
 set nocompatible
 set clipboard=unnamed
-syntax on
 "}}}
 
 let g:python_host_prog = '/usr/bin/python2'
@@ -36,6 +35,7 @@ set incsearch
 " <Ctrl-l> redraws the screen and removes any search highlighting
 " <Ctrl-L> remove not only hightlighting but also the term completely
 nmap S <nop>
+nnoremap F :set invfoldenable<CR>
 nnoremap Q @q
 nnoremap * *#
 nnoremap <silent> <C-L> :nohl<CR>
@@ -245,11 +245,10 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown', 'json']
+" let g:polyglot_disabled = ['markdown']
 Plug 'dzeban/vim-log-syntax'
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-Plug 'elzr/vim-json', {'for': 'json'}
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
 let g:colorizer_auto_filetype = 'css,html'
 Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
@@ -302,6 +301,7 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 call plug#end()
 filetype plugin indent on
+syntax on
 
 colorscheme monokai
 set background=dark
