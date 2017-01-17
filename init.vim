@@ -137,12 +137,10 @@ let g:EasyMotion_do_shade = 1
 " }}}
 
 " window manipulation {{{
-Plug('benmills/vimux')
+Plug 'benmills/vimux'
 nnoremap <C-y> :VimuxPromptCommand <CR>
 nnoremap <C-c> "vyip}:VimuxRunCommand @v<CR>
 nnoremap <C-x> :VimuxCloseRunner<CR>
-Plug 'dyng/ctrlsf.vim'
-Plug 'qpkorr/vim-bufkill'
 Plug 'zhaocai/GoldenView.Vim'
 let g:goldenview__enable_default_mapping = 0
 nmap <silent> [w <Plug>GoldenViewPrevious
@@ -193,15 +191,16 @@ let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=un
 " denite and magit {{{
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/denite.nvim'
+Plug 'dyng/ctrlsf.vim'
 Plug 'jreybert/vimagit'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'qpkorr/vim-bufkill'
 
 nmap <Leader>fw :w<CR>:Denite file_rec<CR>
 nmap <Leader>bw :w<CR>:Denite buffer<CR>
-nmap <Leader>aw :w<CR>:Denite grep<CR>
 nmap <Leader>tt :Denite outline<CR>
 nmap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
 nmap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
-nmap <Leader>as :call GoldenView#Split()<CR>:w<CR>:Denite grep<CR>
 
 "}}}
 

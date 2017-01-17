@@ -25,4 +25,6 @@ let g:neomake_html_htmlhint_maker = {
             \ 'errorformat': '%f:%l:%c: %m',
             \}
 let g:neomake_html_enabled_makers = ['htmlhint']
+let b:fswitchdst = '.css'
+let b:fswitchlocs = '.'
 autocmd! BufWritePost *.html Neomake
