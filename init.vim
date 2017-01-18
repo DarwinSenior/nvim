@@ -196,15 +196,18 @@ Plug 'jreybert/vimagit'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'qpkorr/vim-bufkill'
 
-nmap <Leader>fw :w<CR>:Denite file_rec<CR>
-nmap <Leader>bw :w<CR>:Denite buffer<CR>
-nmap <Leader>tt :Denite outline<CR>
-nmap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
-nmap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
+nnoremap <Leader>fw :w<CR>:Denite file_rec<CR>
+nnoremap <Leader>bw :w<CR>:Denite buffer<CR>
+nnoremap <Leader>tt :Denite outline<CR>
+nnoremap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
+nnoremap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
+nnoremap <Leader>- :FSplitRight<CR>
+nnoremap <Leader>_ :FSHere<CR>
 
 "}}}
 
 " for completion {{{
+Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
@@ -212,8 +215,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'alvan/vim-closetag'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
-inoremap <silent><expr><Tab>  pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
 Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
