@@ -99,24 +99,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-speeddating'
 " }}}
 
-" for appearance {{{
-" Plug 'chriskempson/base16-vim'
-" Plug 'w0ng/vim-hybrid'
-Plug 'crusoexia/vim-monokai'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'mhinz/vim-startify'
-autocmd VimEnter * RainbowParenthesesToggle
-autocmd Syntax * RainbowParenthesesLoadRound
-autocmd Syntax * RainbowParenthesesLoadSquare
-autocmd Syntax * RainbowParenthesesLoadBraces
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline_theme = "bubblegum"
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-" }}}
 
 " for text manipulation {{{
 Plug 'cohama/lexima.vim'
@@ -161,7 +143,6 @@ let g:gundo_right = 1
 " non-intrusive plugins {{{
 Plug 'google/vim-searchindex'
 Plug 'tmhedberg/matchit'
-Plug 'jszakmeister/vim-togglecursor'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'airblade/vim-gitgutter'
 Plug 'danro/rename.vim'
@@ -208,6 +189,7 @@ nnoremap <Leader>_ :FSHere<CR>
 
 " for completion {{{
 Plug 'ervandew/supertab'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
@@ -247,10 +229,10 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
-" let g:polyglot_disabled = ['markdown']
+let g:polyglot_disabled = []
+let g:jsx_ext_required = 1
 Plug 'dzeban/vim-log-syntax'
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
 let g:colorizer_auto_filetype = 'css,html'
 Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
@@ -301,8 +283,34 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " }}}
 
+" for appearance {{{
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme = "bubblegum"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+
+" Plug 'chriskempson/base16-vim'
+" Plug 'w0ng/vim-hybrid'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'miyakogi/seiya.vim'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'crusoexia/vim-monokai'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'mhinz/vim-startify'
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
+" this will enable the vim to be transparent for the background
+" let g:seiya_auto_enable = 1
+" }}}
+
 call plug#end()
 filetype plugin indent on
+set conceallevel=2
 syntax on
 
 colorscheme monokai
@@ -330,3 +338,5 @@ call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'norema
 call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
 
 autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
+
+" let g:airline_section_x+='%{gutentags#statusline()}'
