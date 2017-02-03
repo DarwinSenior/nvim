@@ -35,7 +35,6 @@ set incsearch
 " <Ctrl-l> redraws the screen and removes any search highlighting
 " <Ctrl-L> remove not only hightlighting but also the term completely
 nmap S <nop>
-nnoremap F :set invfoldenable<CR>
 nnoremap Q @q
 nnoremap * *#
 nnoremap <silent> <C-L> :nohl<CR>
@@ -75,18 +74,6 @@ if !exists('$TMUX')
 endif
 
 
-" folding {{{
-function! FoldText()
-    let nblines = '['.(v:foldend - v:foldstart + 1).' lines]'
-    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-    let line = getline(v:foldstart)
-    let comment = strpart(line, 0, w/2) . '...'
-    let expansionString = repeat(' ', w-strwidth(nblines)-strwidth(comment))
-    return (comment . expansionString . nblines)
-endfunction
-set foldnestmax=10
-set foldtext=FoldText()
-" }}}
 
 call plug#begin('~/.config/nvim/plug')
 " tpope classical plugins {{{
@@ -106,7 +93,7 @@ Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
-Plug 'rbonvall/vim-textobj-latex'
+Plug 'rbonvall/vim-textobj-latex', {'for': ['tex']}
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 let g:splitjoin_join_mapping = 'J'
@@ -177,8 +164,8 @@ Plug 'jreybert/vimagit'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'qpkorr/vim-bufkill'
 
-nnoremap <Leader>fw :w<CR>:Denite file_rec<CR>
-nnoremap <Leader>bw :w<CR>:Denite buffer<CR>
+nnoremap <Leader>fw :Denite file_rec<CR>
+nnoremap <Leader>bw :Denite buffer<CR>
 nnoremap <Leader>tt :Denite outline<CR>
 nnoremap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
 nnoremap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
@@ -189,7 +176,7 @@ nnoremap <Leader>_ :FSHere<CR>
 
 " for completion {{{
 Plug 'ervandew/supertab'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
@@ -229,9 +216,11 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = []
+let g:polyglot_disabled = ['tex']
+let g:vim_markdown_math = 1
 let g:jsx_ext_required = 1
 Plug 'dzeban/vim-log-syntax'
+Plug 'lervag/vimtex', {'for': ['tex']}
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
 Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
 let g:colorizer_auto_filetype = 'css,html'
@@ -308,6 +297,13 @@ autocmd Syntax * RainbowParenthesesLoadBraces
 " let g:seiya_auto_enable = 1
 " }}}
 
+" utilities {{{
+Plug 'diepm/vim-rest-console'
+" }}}
+
+let g:envimdevtools_customcss = '~/.config/nvim/custom.css'
+Plug '~/workspace/envim-tools'
+Plug '~/workspace/envim-capture'
 call plug#end()
 filetype plugin indent on
 set conceallevel=2
@@ -321,6 +317,20 @@ hi NeomakeWarningSign   ctermfg=144
 hi NeomakeError     ctermfg=161
 hi NeomakeWarning   ctermfg=14
 hi link deniteMatchedChar String
+
+" folding {{{
+function! FoldText()
+    let nblines = '['.(v:foldend - v:foldstart + 1).' lines]'
+    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+    let line = getline(v:foldstart)
+    let comment = strpart(line, 0, w/2) . '...'
+    let expansionString = repeat(' ', w-strwidth(nblines)-strwidth(comment))
+    return (comment . expansionString . nblines)
+endfunction
+set foldlevelstart=99
+set foldnestmax=10
+set foldtext=FoldText()
+" }}}
 
 if executable('ag')
     call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])

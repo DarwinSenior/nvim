@@ -7,6 +7,9 @@ setlocal omnifunc=necoghc#omnifunc
 nnoremap <buffer> K :HdevtoolsType<CR>
 nnoremap <buffer> <C-l> :let @/ = ""<CR>:HdevtoolsClear<CR>
 
+set shiftwidth=2
+set tabstop=2
+
 let g:neomake_haskell_enabled_makers = ['hdevtools']
 autocmd! BufWritePost *.hs Neomake
 
