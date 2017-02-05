@@ -164,6 +164,8 @@ Plug 'jreybert/vimagit'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'qpkorr/vim-bufkill'
 
+nnoremap <C-f> :CtrlSF<Space>
+
 nnoremap <Leader>fw :Denite file_rec<CR>
 nnoremap <Leader>bw :Denite buffer<CR>
 nnoremap <Leader>tt :Denite outline<CR>
@@ -191,21 +193,22 @@ Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
 Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
 Plug 'eagletmt/neco-ghc', {'for': ['haskell']}
 Plug 'bitc/vim-hdevtools', {'for': ['haskell']}
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
+let g:deoplete#sources#clang#debug = v:true
 Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
 Plug 'mhartington/deoplete-typescript', {'for': ['typescript'], 'do': 'npm install -g typescript'}
 Plug 'racer-rust/vim-racer', {'for': ['rust']}
 Plug 'Shougo/neoinclude.vim'
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
 " }}}
 
 " folding
 Plug 'Konfekt/FastFold'
 
 " call for tags
-Plug 'majutsushi/tagbar'
-nmap gt :TagbarToggle<CR>
+" Plug 'majutsushi/tagbar'
+" nmap gt :TagbarToggle<CR>
 
 " snippet and file types {{{
 Plug 'Shougo/neosnippet.vim'
