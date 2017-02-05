@@ -299,7 +299,10 @@ autocmd Syntax * RainbowParenthesesLoadBraces
 
 " utilities {{{
 Plug 'diepm/vim-rest-console'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'francoiscabrol/ranger.vim'
 " }}}
+let g:ranger_map_keys = 0
 
 let g:envimdevtools_customcss = '~/.config/nvim/custom.css'
 Plug '~/workspace/envim-tools'
