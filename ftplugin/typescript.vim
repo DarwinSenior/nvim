@@ -14,15 +14,19 @@ setlocal foldlevel=1
 setlocal foldlevelstart=2
 
 let g:tagbar_type_typescript = {
-  \ 'ctagstype': 'typescript',
-  \ 'kinds': [
-    \ 'c:classes',
-    \ 'n:modules',
-    \ 'f:functions',
-    \ 'v:variables',
-    \ 'v:varlambdas',
-    \ 'm:members',
-    \ 'i:interfaces',
-    \ 'e:enums',
-  \ ]
-\ }
+            \ 'ctagstype': 'typescript',
+            \ 'kinds': [
+            \ 'c:classes',
+            \ 'n:modules',
+            \ 'f:functions',
+            \ 'v:variables',
+            \ 'v:varlambdas',
+            \ 'm:members',
+            \ 'i:interfaces',
+            \ 'e:enums',
+            \ ]
+            \ }
+
+nmap gt :TagbarToggle<CR>
+nmap <Leader>ec gg/styles<CR>$:noh<CR>vi`:NN css<CR>
+nmap <Leader>eh gg/template<CR>$vi`:NN html<CR>

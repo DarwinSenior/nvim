@@ -101,6 +101,8 @@ nnoremap S :SplitjoinSplit<CR>
 Plug 'godlygeek/tabular'
 Plug 'easymotion/vim-easymotion'
 map <Leader>w <Plug>(easymotion-bd-w)
+map <Leader>W <Plug>(easymotion-overwin-f)
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_shade = 1
 " }}}
@@ -142,9 +144,6 @@ autocmd BufWritePre * StripWhitespace
 Plug 'Chiel92/vim-autoformat'
 nmap <Leader><Leader><Leader> :Autoformat<CR>
 let g:autoformat_verbosemode = 1
-if executable('tidy')
-    let g:formatters_html = ['tidy']
-endif
 
 Plug 'neomake/neomake'
 " autocmd! BufWritePost * Neomake
@@ -155,6 +154,15 @@ let g:neomake_json_enabled_makers = ['jsonlint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 " }}}
+" let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
+" let g:neomake_warning_sign = {'text': '', 'texthl': 'NeomakeWarningSign'}
+" let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
+let g:neomake_warning_sign = {'text': 'w', 'texthl': 'NeomakeWarningSign'}
+let g:neomake_error_sign = {'text': 'e', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
+hi NeomakeErrorSign     ctermfg=Red
+hi NeomakeWarningSign   ctermfg=Yellow
+hi NeomakeInfoSign      ctermfg=Green
 
 " denite and magit {{{
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
@@ -183,10 +191,11 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/echodoc.vim'
-Plug 'alvan/vim-closetag'
+Plug 'sukima/xmledit'
+" Plug 'alvan/vim-closetag'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+" let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
@@ -198,7 +207,7 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
 let g:deoplete#sources#clang#debug = v:true
 Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
-Plug 'mhartington/deoplete-typescript', {'for': ['typescript'], 'do': 'npm install -g typescript'}
+Plug 'mhartington/nvim-typescript', {'for': ['typescript'], 'do': 'npm install -g typescript'}
 Plug 'racer-rust/vim-racer', {'for': ['rust']}
 Plug 'Shougo/neoinclude.vim'
 " }}}
@@ -207,10 +216,10 @@ Plug 'Shougo/neoinclude.vim'
 Plug 'Konfekt/FastFold'
 
 " call for tags
-" Plug 'majutsushi/tagbar'
-" nmap gt :TagbarToggle<CR>
+Plug 'majutsushi/tagbar'
 
 " snippet and file types {{{
+Plug 'editorconfig/editorconfig-vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -219,9 +228,28 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['tex']
+Plug 'HerringtonDarkholme/yats.vim'
+let g:polyglot_disabled = ['tex', 'typescript']
 let g:vim_markdown_math = 1
 let g:jsx_ext_required = 1
+let g:haskell_indent_disable = 1
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+Plug 'chrisbra/NrrwRgn'
+command! -nargs=* -bang -range -complete=filetype NN
+            \ :<line1>,<line2> call nrrwrgn#NrrwRgn('',<q-bang>)
+            \ | set filetype=<args>
+
+" Plug 'Quramy/vim-js-pretty-template'
+" autocmd BufNewFile,BufEnter *.component.ts JsPreTmpl html
+" autocmd BufNewFile,BufEnter *.component.ts syn clear foldBraces
+
 Plug 'dzeban/vim-log-syntax'
 Plug 'lervag/vimtex', {'for': ['tex']}
 Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
@@ -258,21 +286,16 @@ Plug 'reedes/vim-pencil', {'for': ['markdown', 'notes']}
 function! s:goyo_enter()
     set scrolloff=999
     set background=light
-    Limelight
-    call pencil#init({'wrap': 'soft'})
     set spell
-    hi clear SpellBad
     call deoplete#disable()
 endfunction
 function! s:goyo_leave()
     set scrolloff=5
-    Limelight!
-    call pencil#init({'wrap': 'off'})
     set nospell
     call deoplete#enable()
 endfunction
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
 " }}}
 
 " for appearance {{{
@@ -283,10 +306,11 @@ let g:airline_theme = "bubblegum"
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#nrrwrgn#enabled = 1
 
 " Plug 'chriskempson/base16-vim'
 " Plug 'w0ng/vim-hybrid'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 Plug 'miyakogi/seiya.vim'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'crusoexia/vim-monokai'
@@ -318,10 +342,6 @@ syntax on
 colorscheme monokai
 set background=dark
 
-hi NeomakeErrorSign     ctermfg=161
-hi NeomakeWarningSign   ctermfg=144
-hi NeomakeError     ctermfg=161
-hi NeomakeWarning   ctermfg=14
 hi link deniteMatchedChar String
 
 " folding {{{
