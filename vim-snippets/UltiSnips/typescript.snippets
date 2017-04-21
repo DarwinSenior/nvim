@@ -1,0 +1,66 @@
+global !p
+def filename():
+	return vim.eval("expand('%:t')")
+
+def strippedName(x):
+	return filename().replace('.%s.ts'%x, '')
+
+def dash2capitle(text):
+	return ''.join([x.capitalize() for x in text.split('-')])
+
+def name2something(seperator, joiner):
+	pass
+endglobal
+
+snippet import
+import \{${2}} from '${1}';
+endsnippet
+
+snippet mgm "mongo model" b
+import {Schema, createConnection, Document} from 'mongoose'
+import { db } from './${3:db}';
+
+const ${1:`!p snip.rv = filename().replace('.ts', '').capitalize()`}Schema = new Schema({
+	`!p
+lines = t[2].split('\n')
+def totype(x):
+	if x in ['string', 'number', 'boolean']:
+		return x.capitalize()
+	elif x.endswith('[]'): return 'Array'
+	elif x[0] == '{' and x[-1] == '}': return 'Object'
+	else: return x
+def translate(line):
+	match = re.match(r'(\S+)\s*:\s*(\S+);?', line)
+	if match:
+		return '%s: {type: %s}'%(match.group(1), totype(match.group(2)))
+	else: return ''
+snip.rv = '\n'.join(map(translate, lines))
+	`
+})
+
+export const $1Model = db.model('`!p snip.rv = t[1].lower()`', $1Schema);
+export interface $1 extends Document {
+	${2}
+}
+
+endsnippet
+
+snippet ngc "ng components" b
+import \{ Component, Input } from '@angular/core';
+
+@Component({
+  selector: '`!p snip.rv=strippedName('component')`',
+  template: \`
+  <div>`!p snip.rv=strippedName('component')` works</div>
+  \`,
+  styles: [\`
+:host\{}
+  \`]
+})
+export class `!p snip.rv=dash2capitle(strippedName('component'))`Component {
+  constructor(){
+
+  }
+}
+endsnippet
+

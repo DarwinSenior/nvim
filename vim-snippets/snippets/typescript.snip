@@ -3,3 +3,56 @@ abbr        console.log
 options     word
     console.log(${0});
 
+snippet     import
+abbr        import
+options     head
+    import { ${2:#:content} } from '${1:#:target}';${0}
+
+# angular snippets
+snippet     ngc
+abbr        component
+options     head
+    import { Component, Input } from '@angular/core';
+
+    @Component({
+      selector: '`pyeval('"'.expand('%:t').'".replace(".component.ts", "")')`',
+      template: \`
+    ${0:#:<div>`pyeval('"'.expand('%:t').'".replace(".component.ts", "")')` works!</div>}
+                \`,
+      styles: [\`
+    :host{
+      display: block;
+    }
+      \`],
+      providers: [],
+    })
+    export class `pyeval('"".join([w.title() for w in "'.expand('%:t').'".replace(".component.ts", "").split("-")])')`Component {
+        constructor(){}
+    }
+
+# snippet for creating directive
+snippet     ngd
+abbr        directive
+options     head
+    import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+
+    @Directive({
+        selector: '[`pyeval('"'.expand('%:t').'".replace(".directive.ts", "")')`]'
+    })
+    export class `pyeval('"'.expand('%:t').'".replace(".directive.ts", "").capitalize()')`Directive {
+        constructor(private el: ElementRef){
+        }
+
+        @Input('`pyeval('"'.expand('%:t').'".replace(".directive.ts", "")')`') ${0};
+    }
+
+snippet     ngp
+abbr        pipe
+options     head
+    import {Pipe, PipeTransform} from '@angular/core';
+
+    @Pipe({name: '`pyeval('"'.expand('%:t').'".replace(".pipe.ts", "")')`'})
+    export class `pyeval('"'.expand('%:t').'".replace(".pipe.ts", "").capitalize()')`Pipe implements PipeTransform {
+        transform(${0}) {
+        }
+    }

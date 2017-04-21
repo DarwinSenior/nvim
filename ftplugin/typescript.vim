@@ -27,6 +27,7 @@ let g:tagbar_type_typescript = {
             \ ]
             \ }
 
+let b:nrrw_aucmd_written = ':update'
 nmap gt :TagbarToggle<CR>
 nmap <Leader>ec gg/styles<CR>$:noh<CR>vi`:NN css<CR>
-nmap <Leader>eh gg/template<CR>$vi`:NN html<CR>
+nmap <Leader>eh gg/template<CR>$vi`:NN html<CR>:EmmetInstall<CR>

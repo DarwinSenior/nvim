@@ -49,7 +49,7 @@ nnoremap gV `[v`]
 " turn of swap files
 set noswapfile
 set nobackup
-set nowb
+set nowritebackup
 
 " warping
 set wrap
@@ -88,7 +88,7 @@ Plug 'tpope/vim-speeddating'
 
 
 " for text manipulation {{{
-Plug 'cohama/lexima.vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-user'
@@ -108,10 +108,10 @@ let g:EasyMotion_do_shade = 1
 " }}}
 
 " window manipulation {{{
-Plug 'benmills/vimux'
-nnoremap <C-y> :VimuxPromptCommand <CR>
-nnoremap <C-c> "vyip}:VimuxRunCommand @v<CR>
-nnoremap <C-x> :VimuxCloseRunner<CR>
+" Plug 'benmills/vimux'
+" nnoremap <C-y> :VimuxPromptCommand <CR>
+" nnoremap <C-c> "vyip}:VimuxRunCommand @v<CR>
+" nnoremap <C-x> :VimuxCloseRunner<CR>
 Plug 'zhaocai/GoldenView.Vim'
 let g:goldenview__enable_default_mapping = 0
 nmap <silent> [w <Plug>GoldenViewPrevious
@@ -154,12 +154,9 @@ let g:neomake_json_enabled_makers = ['jsonlint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 " }}}
-" let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
-" let g:neomake_warning_sign = {'text': '', 'texthl': 'NeomakeWarningSign'}
-" let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
-let g:neomake_warning_sign = {'text': 'w', 'texthl': 'NeomakeWarningSign'}
-let g:neomake_error_sign = {'text': 'e', 'texthl': 'NeomakeErrorSign'}
-let g:neomake_info_sign = {'text': 'i', 'texthl': 'NeomakeInfoSign'}
+let g:neomake_error_sign = {'text': '', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_warning_sign = {'text': '', 'texthl': 'NeomakeWarningSign'}
+let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
 hi NeomakeErrorSign     ctermfg=Red
 hi NeomakeWarningSign   ctermfg=Yellow
 hi NeomakeInfoSign      ctermfg=Green
@@ -171,16 +168,15 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'jreybert/vimagit'
 Plug 'derekwyatt/vim-fswitch'
 Plug 'qpkorr/vim-bufkill'
+Plug 'ctrlpvim/ctrlp.vim'
 
 nnoremap <C-f> :CtrlSF<Space>
+let g:ctrlp_map = '<Leader>fw'
+let g:ctrlp_working_path_mode = 'a'
 
-nnoremap <Leader>fw :Denite file_rec<CR>
+" nnoremap <Leader>fw :Denite file_rec<CR>
 nnoremap <Leader>bw :Denite buffer<CR>
 nnoremap <Leader>tt :Denite outline<CR>
-nnoremap <Leader>fs :call GoldenView#Split()<CR>:w<CR>:Denite file_rec<CR>
-nnoremap <Leader>bs :call GoldenView#Split()<CR>:w<CR>:Denite buffer<CR>
-nnoremap <Leader>- :FSplitRight<CR>
-nnoremap <Leader>_ :FSHere<CR>
 
 "}}}
 
@@ -191,12 +187,18 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/echodoc.vim'
-Plug 'sukima/xmledit'
+Plug 'mattn/emmet-vim'
+Plug 'sukima/xmledit', {'for': ['html', 'xml']}
 " Plug 'alvan/vim-closetag'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 " let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:user_emmet_install_global = 0
+autocmd Filetype html EmmetInstall
+let g:user_emmet_leader_key = '<C-k>'
+
+
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
 Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
@@ -220,15 +222,26 @@ Plug 'majutsushi/tagbar'
 
 " snippet and file types {{{
 Plug 'editorconfig/editorconfig-vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
+Plug 'SirVer/ultisnips'
+
+let g:UltiSnipsExpandTrigger='<C-k>'
+let g:UltiSnipsJumpForwardTrigger='<C-k>'
+let g:UltiSnipsJumpBackwardTrigger=''
+let g:UltiSnipsSnippetsDir='~/.config/nvim/vim-snippets/UltiSnips'
+let g:UltiSnipsSnippetDirectories=['vim-snippets/UltiSnips']
+let g:UltiSnipsEditSplit = 'horizontal'
+
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_target)
+" let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
 " syntax section
 Plug 'sheerun/vim-polyglot'
 Plug 'HerringtonDarkholme/yats.vim'
+Plug 'chrisbra/csv.vim', {'for': ['csv']}
+Plug 'arakashic/chromatica.nvim', {'for': ['c++']}
 let g:polyglot_disabled = ['tex', 'typescript']
 let g:vim_markdown_math = 1
 let g:jsx_ext_required = 1
@@ -344,35 +357,47 @@ set background=dark
 
 hi link deniteMatchedChar String
 
-" folding {{{
-function! FoldText()
-    let nblines = '['.(v:foldend - v:foldstart + 1).' lines]'
-    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-    let line = getline(v:foldstart)
-    let comment = strpart(line, 0, w/2) . '...'
-    let expansionString = repeat(' ', w-strwidth(nblines)-strwidth(comment))
-    return (comment . expansionString . nblines)
-endfunction
-set foldlevelstart=99
-set foldnestmax=10
-set foldtext=FoldText()
-" }}}
-
-if executable('ag')
-    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('grep', 'separator', [])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['--nocolor', '--nogroup'])
-endif
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-            \ [ '.git/', '.ropeproject/', '__pycache__/',
-            \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-call denite#custom#map('insert', '<Down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<Up>', '<denite:move_to_previous_line>', 'noremap')
-
 autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
 
-" let g:airline_section_x+='%{gutentags#statusline()}'
+" folding {{{
+function! FoldText()
+    let l:lpadding = &foldcolumn
+    redir => l:signs
+    execute 'silent sign place buffer='.bufnr('%')
+    redir End
+    let l:lpadding += l:signs =~# 'id=' ? 2 : 0
+
+    if exists('+relativenumber')
+        if (&number)
+            let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+        elseif (&relativenumber)
+            let l:lpadding += max([&numberwidth, strlen(v:foldstart - line('w0')), strlen(line('w$') - v:foldstart), strlen(v:foldstart)]) + 1
+        endif
+    else
+        if (&number)
+            let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+        endif
+    endif
+
+    " expand tabs
+    let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+    let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
+
+    let l:info = ' (' . (v:foldend - v:foldstart) . ')'
+    let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
+    let l:width = winwidth(0) - l:lpadding - l:infolen
+
+    let l:separator = ' … '
+    let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
+    let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
+    let l:text = l:start . ' … ' . l:end
+
+    return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
+endfunction
+augroup folding
+    autocmd!
+    autocmd BufEnter * set foldlevelstart=99
+    autocmd BufEnter * set foldnestmax=10
+    autocmd BufEnter * set foldtext=FoldText()
+augroup END
+" }}}
