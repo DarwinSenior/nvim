@@ -5,8 +5,12 @@ def filename():
 def strippedName(x):
 	return filename().replace('.%s.ts'%x, '')
 
-def dash2capitle(text):
+def dash2capital(text):
 	return ''.join([x.capitalize() for x in text.split('-')])
+
+def dash2camel(text):
+	parts = text.split()
+	return parts[0]+''.join([x.capitalize() for x in parts[1:]])
 
 def name2something(seperator, joiner):
 	pass
@@ -45,7 +49,7 @@ export interface $1 extends Document {
 
 endsnippet
 
-snippet ngc "ng components" b
+snippet ngc "ng component" b
 import \{ Component, Input } from '@angular/core';
 
 @Component({
@@ -55,12 +59,37 @@ import \{ Component, Input } from '@angular/core';
   \`,
   styles: [\`
 :host\{}
-  \`]
+  \`],
 })
-export class `!p snip.rv=dash2capitle(strippedName('component'))`Component {
+export class `!p snip.rv=dash2capital(strippedName('component'))`Component {
   constructor(){
 
   }
 }
 endsnippet
 
+snippet ngp "ng pipe" b
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({name: '`!p snip.rv = dash2camel(strippedName('pipe'))`'})
+export class `!p snip.rv = dash2capital(strippedName('pipe'))`Pipe implements PipeTransform {
+  transform(value: ${1:any}){
+    ${2:return value}
+  }
+}
+endsnippet
+
+snippet ngs "ng service" b
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+
+@Injectable()
+export class `!p snip.rv = dash2capital(strippedName('service'))`Service{
+
+  constructor(){
+    ${0}
+  }
+}
+endsnippet
+
+extends html, javascript

@@ -56,6 +56,7 @@ set wrap
 set linebreak
 set nolist
 
+
 set autoread
 
 "{{{ create tab
@@ -86,6 +87,37 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-speeddating'
 " }}}
 
+" for appearance {{{
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme = "bubblegum"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#nrrwrgn#enabled = 1
+let g:airline#extensions#capslock#enabled = 1
+
+" Plug 'chriskempson/base16-vim'
+" Plug 'w0ng/vim-hybrid'
+Plug 'ryanoasis/vim-devicons'
+Plug 'miyakogi/seiya.vim'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'crusoexia/vim-monokai'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'mhinz/vim-startify'
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
+
+set background=dark
+let g:enable_bold_font = 1
+hi link deniteMatchedChar String
+" this will enable the vim to be transparent for the background
+" let g:seiya_auto_enable = 1
+" }}}
 
 " for text manipulation {{{
 Plug 'jiangmiao/auto-pairs'
@@ -93,6 +125,8 @@ Plug 'tommcdo/vim-exchange'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
+Plug 'kana/vim-textobj-fold'
+Plug 'michaeljsmith/vim-indent-object'
 Plug 'rbonvall/vim-textobj-latex', {'for': ['tex']}
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -144,24 +178,24 @@ autocmd BufWritePre * StripWhitespace
 Plug 'Chiel92/vim-autoformat'
 nmap <Leader><Leader><Leader> :Autoformat<CR>
 let g:autoformat_verbosemode = 1
+" }}}
 
+" neomake {{{
 Plug 'neomake/neomake'
-" autocmd! BufWritePost * Neomake
-
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_typescript_enabled_makers = ['tsc']
 let g:neomake_json_enabled_makers = ['jsonlint']
 let g:neomake_cpp_enabled_markers=['clang']
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
-" }}}
 let g:neomake_error_sign = {'text': '', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_info_sign = {'text': '', 'texthl': 'NeomakeInfoSign'}
-hi NeomakeErrorSign     ctermfg=Red
-hi NeomakeWarningSign   ctermfg=Yellow
-hi NeomakeInfoSign      ctermfg=Green
+hi NeomakeErrorSign     ctermfg=red
+hi NeomakeWarningSign   ctermfg=yellow
+hi NeomakeInfoSign      ctermfg=green
+" }}}
 
-" denite and magit {{{
+" denite and magit and ctrlp {{{
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/denite.nvim'
 Plug 'dyng/ctrlsf.vim'
@@ -180,24 +214,18 @@ nnoremap <Leader>tt :Denite outline<CR>
 
 "}}}
 
-" for completion {{{
+" completion {{{
 Plug 'ervandew/supertab'
-" Plug 'ludovicchabant/vim-gutentags'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neopairs.vim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/echodoc.vim'
-Plug 'mattn/emmet-vim'
 Plug 'sukima/xmledit', {'for': ['html', 'xml']}
 " Plug 'alvan/vim-closetag'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 " let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:user_emmet_install_global = 0
-autocmd Filetype html EmmetInstall
-let g:user_emmet_leader_key = '<C-k>'
-
 
 
 Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
@@ -212,154 +240,15 @@ Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g t
 Plug 'mhartington/nvim-typescript', {'for': ['typescript'], 'do': 'npm install -g typescript'}
 Plug 'racer-rust/vim-racer', {'for': ['rust']}
 Plug 'Shougo/neoinclude.vim'
+
 " }}}
 
-" folding
-Plug 'Konfekt/FastFold'
-
-" call for tags
-Plug 'majutsushi/tagbar'
-
-" snippet and file types {{{
-Plug 'editorconfig/editorconfig-vim'
-Plug 'SirVer/ultisnips'
-
-let g:UltiSnipsExpandTrigger='<C-k>'
-let g:UltiSnipsJumpForwardTrigger='<C-k>'
-let g:UltiSnipsJumpBackwardTrigger=''
-let g:UltiSnipsSnippetsDir='~/.config/nvim/vim-snippets/UltiSnips'
-let g:UltiSnipsSnippetDirectories=['vim-snippets/UltiSnips']
-let g:UltiSnipsEditSplit = 'horizontal'
-
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-" imap <C-k> <Plug>(neosnippet_expand_or_jump)
-" smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k> <Plug>(neosnippet_expand_target)
-" let g:neosnippet#snippets_directory='~/.config/nvim/vim-snippets/snippets'
-" syntax section
-Plug 'sheerun/vim-polyglot'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'chrisbra/csv.vim', {'for': ['csv']}
-Plug 'arakashic/chromatica.nvim', {'for': ['c++']}
-let g:polyglot_disabled = ['tex', 'typescript']
-let g:vim_markdown_math = 1
-let g:jsx_ext_required = 1
-let g:haskell_indent_disable = 1
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-Plug 'chrisbra/NrrwRgn'
-command! -nargs=* -bang -range -complete=filetype NN
-            \ :<line1>,<line2> call nrrwrgn#NrrwRgn('',<q-bang>)
-            \ | set filetype=<args>
-
-" Plug 'Quramy/vim-js-pretty-template'
-" autocmd BufNewFile,BufEnter *.component.ts JsPreTmpl html
-" autocmd BufNewFile,BufEnter *.component.ts syn clear foldBraces
-
-Plug 'dzeban/vim-log-syntax'
-Plug 'lervag/vimtex', {'for': ['tex']}
-Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
-Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
-let g:colorizer_auto_filetype = 'css,html'
-Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
-" }}}
-
-" writing documentation {{{
-" Plug 'mtth/scratch.vim'
-Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'notes']}
-let g:table_mode_corner="|"
-Plug 'dkarter/bullets.vim'
-let g:bullets_enabled_file_types = [
-            \ 'markdown',
-            \ 'text',
-            \ 'gitcommit',
-            \ 'scratch',
-            \ 'org',
-            \ 'notes'
-            \]
-Plug 'xolox/vim-misc'
-Plug 'git@github.com:DarwinSenior/vim-notes.git', {'branch': 'development'}
-Plug 'utl.vim'
-nnoremap gx :Utl<CR>
-Plug 'VOoM'
-let g:notes_directories = ['~/workspace/notes/notefiles']
-let g:notes_tab_indents = 0
-let g:notes_suffix = '.notes'
-let g:notes_smart_quotes = 0
-Plug 'junegunn/goyo.vim', {'for': ['markdown', 'notes']}
-Plug 'junegunn/limelight.vim', {'for': ['markdown', 'notes']}
-Plug 'reedes/vim-pencil', {'for': ['markdown', 'notes']}
-function! s:goyo_enter()
-    set scrolloff=999
-    set background=light
-    set spell
-    call deoplete#disable()
-endfunction
-function! s:goyo_leave()
-    set scrolloff=5
-    set nospell
-    call deoplete#enable()
-endfunction
-" autocmd! User GoyoEnter nested call <SID>goyo_enter()
-" autocmd! User GoyoLeave nested call <SID>goyo_leave()
-" }}}
-
-" for appearance {{{
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline_theme = "bubblegum"
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#nrrwrgn#enabled = 1
-
-" Plug 'chriskempson/base16-vim'
-" Plug 'w0ng/vim-hybrid'
-Plug 'ryanoasis/vim-devicons'
-Plug 'miyakogi/seiya.vim'
-Plug 'jszakmeister/vim-togglecursor'
-Plug 'crusoexia/vim-monokai'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'mhinz/vim-startify'
-autocmd VimEnter * RainbowParenthesesToggle
-autocmd Syntax * RainbowParenthesesLoadRound
-autocmd Syntax * RainbowParenthesesLoadSquare
-autocmd Syntax * RainbowParenthesesLoadBraces
-" this will enable the vim to be transparent for the background
-" let g:seiya_auto_enable = 1
-" }}}
-
-" utilities {{{
-Plug 'diepm/vim-rest-console'
-Plug 'rbgrouleff/bclose.vim'
-Plug 'francoiscabrol/ranger.vim'
-" }}}
-let g:ranger_map_keys = 0
-
-let g:envimdevtools_customcss = '~/.config/nvim/custom.css'
-Plug '~/workspace/envim-tools'
-Plug '~/workspace/envim-capture'
-call plug#end()
-filetype plugin indent on
-set conceallevel=2
-syntax on
-
-colorscheme monokai
-set background=dark
-
-hi link deniteMatchedChar String
-
-autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
+Plug 'bfredl/nvim-ipy', {'for': ['python']}
+let g:nvim_ipy_perform_mapping = 1
 
 " folding {{{
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
 function! FoldText()
     let l:lpadding = &foldcolumn
     redir => l:signs
@@ -392,7 +281,7 @@ function! FoldText()
     let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
     let l:text = l:start . ' … ' . l:end
 
-    return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
+    return l:text . repeat(' ', l:width - strlen(substitute(l:text, '.', 'x', 'g'))) . l:info
 endfunction
 augroup folding
     autocmd!
@@ -401,3 +290,108 @@ augroup folding
     autocmd BufEnter * set foldtext=FoldText()
 augroup END
 " }}}
+
+" tagbar {{{
+Plug 'majutsushi/tagbar'
+" }}}
+
+" snippet {{{
+Plug 'editorconfig/editorconfig-vim'
+Plug 'SirVer/ultisnips'
+
+let g:UltiSnipsExpandTrigger='<C-k>'
+let g:UltiSnipsJumpForwardTrigger='<C-k>'
+let g:UltiSnipsJumpBackwardTrigger=''
+let g:UltiSnipsSnippetsDir='~/.config/nvim/vim-snippets/UltiSnips'
+let g:UltiSnipsSnippetDirectories=['vim-snippets/UltiSnips', 'plug/emmet.snippets/UltiSnips']
+let g:UltiSnipsEditSplit = 'horizontal'
+
+Plug 'jceb/emmet.snippets'
+
+" }}}
+
+" syntax section {{{
+Plug 'sheerun/vim-polyglot'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'chrisbra/csv.vim', {'for': ['csv']}
+Plug 'arakashic/chromatica.nvim', {'for': ['c++']}
+Plug 'SyntaxRange'
+let g:polyglot_disabled = ['tex', 'typescript']
+let g:vim_markdown_math = 1
+let g:jsx_ext_required = 1
+let g:haskell_indent_disable = 1
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+Plug 'chrisbra/NrrwRgn'
+command! -nargs=* -bang -range -complete=filetype NN
+            \ :<line1>,<line2> call nrrwrgn#NrrwRgn('',<q-bang>)
+            \ | set filetype=<args>
+Plug 'dzeban/vim-log-syntax'
+Plug 'chiphogg/vim-prototxt'
+Plug 'lervag/vimtex', {'for': ['tex']}
+Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml']}
+Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
+let g:colorizer_auto_filetype = 'css,html'
+Plug 'vim-scripts/XML-Folding', {'for': ['html', 'xml']}
+" }}}
+
+" writing documentation {{{
+" Plug 'mtth/scratch.vim'
+Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'notes']}
+let g:table_mode_corner="|"
+Plug 'dkarter/bullets.vim'
+let g:bullets_enabled_file_types = [
+            \ 'markdown',
+            \ 'text',
+            \ 'gitcommit',
+            \ 'scratch',
+            \ 'org',
+            \ 'notes'
+            \]
+Plug 'xolox/vim-misc'
+Plug 'git@github.com:DarwinSenior/vim-notes.git', {'branch': 'development'}
+Plug 'VOoM'
+let g:notes_directories = ['~/workspace/notes/notefiles']
+let g:notes_tab_indents = 0
+let g:notes_suffix = '.notes'
+let g:notes_smart_quotes = 0
+Plug 'junegunn/goyo.vim', {'for': ['markdown', 'notes']}
+Plug 'junegunn/limelight.vim', {'for': ['markdown', 'notes']}
+Plug 'reedes/vim-pencil', {'for': ['markdown', 'notes']}
+function! s:goyo_enter()
+    set scrolloff=999
+    set background=light
+    set spell
+    call deoplete#disable()
+endfunction
+function! s:goyo_leave()
+    set scrolloff=5
+    set nospell
+    call deoplete#enable()
+endfunction
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" }}}
+
+" utilities {{{
+Plug 'diepm/vim-rest-console'
+Plug 'rbgrouleff/bclose.vim'
+" }}}
+
+let g:envimdevtools_customcss = '~/.config/nvim/custom.css'
+Plug '~/workspace/envim-tools'
+Plug '~/workspace/envim-capture'
+call plug#end()
+filetype plugin indent on
+set conceallevel=2
+syntax on
+
+colorscheme hybrid_material
+autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
+
