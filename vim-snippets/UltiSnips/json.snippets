@@ -1,0 +1,42 @@
+snippet angular-projection "angular projectionist" b
+{
+  "app/components/*.component.ts": {
+	"type": "c",
+	"alternate": "app/components/{}.component.html"
+  },
+  "app/components/components.ts": {"type": "c"},
+  "app/pipes/*.pipe.ts": {"type": "p"},
+  "app/pipes/pipes.ts": {"type": "p"},
+  "app/directives/*.directive.ts": {"type": "d"},
+  "app/directives/directives.ts": {"type": "d"},
+  "app/services/*.service.ts": {"type": "s"},
+  "app/services/services.ts": {"type": "s"},
+  "app/components/*.component.html": {"alternate": "app/components/{}.component.ts"}
+}
+endsnippet
+snippet node-tsconfig "tsconfig for node" b
+{
+  "compilerOptions": {
+    "outDir": "../dist",
+	"sourceMap": "true",
+	"declaration": "false",
+	"moduleResolution": "node",
+	"emitDecoratorMetadata": true,
+	"experimentalDecorators": true,
+    "module": "commonjs",
+	"moduleResolution": "node",
+    "target": "es6",
+    "sourceMap": false,
+    "types": [
+      "node"
+    ],
+	"typeRoots": [
+	  "node_modules/@types"
+	],
+    "lib": [
+      "es2016"
+    ]
+  }
+}
+endsnippet
+
