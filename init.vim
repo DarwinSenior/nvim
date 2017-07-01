@@ -85,7 +85,12 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-dispatch'
+Plug 'drmingdrmer/vim-toggle-quickfix'
 nmap _ <Plug>VinegarUp
+nnoremap - :A<cr>
+nnoremap <F9> :Dispatch!<CR>
+nnoremap <F10> :Copen<CR>
 autocmd FileType netrw nnoremap <silent> <buffer> <ESC> <C-^>
 " }}}
 
@@ -209,6 +214,7 @@ Plug 'junegunn/fzf.vim'
 
 nnoremap <C-f> :CtrlSF<Space>
 nnoremap <Leader>fw :FZF<CR>
+nnoremap <Leader>fg :GFiles<CR>
 
 nnoremap <Leader>bw :Denite buffer<CR>
 nnoremap <Leader>tt :Denite outline<CR>
@@ -251,10 +257,13 @@ let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
 let g:deoplete#sources#clang#debug = v:true
-Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
+" Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
 Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'vim'], 'do': 'npm install -g typescript'}
+Plug 'wokalski/autocomplete-flow', {'for': ['javascript', 'javascript.jsx']}
 Plug 'racer-rust/vim-racer', {'for': ['rust']}
 let g:racer_experimental_completer = 1
+let g:neosnippet#enable_completed_snippet = 0
+
 " }}}
 
 " folding {{{
@@ -323,21 +332,24 @@ let g:UltiSnipsEditSplit = 'vertical'
 " }}}
 
 " syntax section {{{
-Plug 'SyntaxRange'
+Plug 'vim-scripts/SyntaxRange'
 " programming languages
 Plug 'arakashic/chromatica.nvim', {'for': ['c++', 'c']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c++']}
 Plug 'othree/html5.vim', {'for': ['html']}
 Plug 'hail2u/vim-css3-syntax', {'for': ['css']}
-Plug 'othree/yajs.vim', {'for': ['javascript']}
-Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript']}
+" Plug 'othree/yajs.vim', {'for': ['javascript']}
+Plug 'pangloss/vim-javascript', {'for': ['javascript']}
+Plug 'mxw/vim-jsx', {'for': ['javascript']}
+" Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript']}
+Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
 Plug 'kh3phr3n/python-syntax', {'for': ['python']}
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 let g:rust_fold = 1
 let g:python_highlight_all = 1
 let g:chromatica#enable_at_startup=1
-let g:jsx_ext_required = 1
+let g:jsx_ext_required = 0
 " text files
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
 Plug 'lervag/vimtex', {'for': ['tex']}
@@ -373,7 +385,7 @@ let g:bullets_enabled_file_types = [
             \]
 Plug 'xolox/vim-misc'
 Plug 'git@github.com:DarwinSenior/vim-notes.git', {'branch': 'development'}
-Plug 'VOoM'
+Plug 'vim-scripts/VOoM'
 let g:notes_directories = ['~/workspace/notes/notefiles']
 let g:notes_tab_indents = 0
 let g:notes_suffix = '.notes'
@@ -399,6 +411,7 @@ Plug 'reedes/vim-pencil', {'for': ['markdown', 'notes']}
 " utilities {{{
 Plug 'diepm/vim-rest-console'
 Plug 'sunaku/vim-dasht'
+Plug 'zenbro/mirror.vim'
 Plug 'bfredl/nvim-ipy', {'for': ['python', 'vim']}
 let g:nvim_ipy_perform_mapping = 0
 " }}}

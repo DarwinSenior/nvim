@@ -10,7 +10,7 @@
 " let g:neomake_typescript_enabled_makers = ['tsc']
 " let g:nvim_typescript#type_info#on_hold = 1
 " autocmd! BufWritePost *.ts Neomake
-let g:ale_linters.typescript = ['typecheck']
+let g:ale_linters.typescript = ['tsserver']
 setlocal foldlevelstart=0
 
 let g:tagbar_type_typescript = {

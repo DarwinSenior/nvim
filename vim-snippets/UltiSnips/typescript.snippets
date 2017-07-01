@@ -49,8 +49,13 @@ export interface $1 extends Document {
 
 endsnippet
 
-snippet ngc "ng component" b
-import \{ Component, Input } from '@angular/core';
+snippet ngcomponent "ng component" b
+import \{
+  Component,
+  ViewChild, ViewChildren, ElementRef,
+  ContentChild, ContentChildren,
+  Input, Output, EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: '`!p snip.rv=strippedName('component')`',
@@ -68,7 +73,57 @@ export class `!p snip.rv=dash2capital(strippedName('component'))`Component {
 }
 endsnippet
 
-snippet ngp "ng pipe" b
+snippet ngpage "ng page" b
+import \{
+  Component,
+  HostBinding,
+\} from '@angular/core'
+
+@Component({
+  selector: 'page-`!p snip.rv=strippedName('page')`',
+  templateUrl: '`!p snip.rv=strippedName('page')`.page.html',
+  moduleId: module.id,
+})
+export class `!p snip.rv=dash2capital(strippedName('page'))`Page {
+  constructor(){}
+}
+endsnippet
+
+snippet ngunit "ng unit" b
+import \{
+  Component,
+  Input, Output, EventEmitter,
+\} from '@angular/core'
+
+@Component({
+  selector: '`!p snip.rv=strippedName('unit')`',
+  templateUrl: '`!p snip.rv=strippedName('unit')`.unit.html',
+  moduleId: module.id,
+})
+export class `!p snip.rv=dash2capital(strippedName('unit'))`Unit {
+  constructor(){}
+}
+endsnippet
+
+snippet ngwidget "ng widget" b
+import \{
+  Component,
+  Input, Output, EventEmitter,
+  ViewChild, ViewChildren, ContentChild,
+  ContentChildren, ElementRef,
+\} from '@angular/core'
+
+@Component({
+  selector: '`!p snip.rv=strippedName('widget')`',
+  templateUrl: '`!p snip.rv=strippedName('widget')`.widget.html',
+  moduleId: module.id,
+})
+export class `!p snip.rv=dash2capital(strippedName('widget'))`Widget {
+  constructor(){}
+}
+endsnippet
+
+snippet ngpipe "ng pipe" b
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: '`!p snip.rv = dash2camel(strippedName('pipe'))`'})
@@ -79,12 +134,12 @@ export class `!p snip.rv = dash2capital(strippedName('pipe'))`Pipe implements Pi
 }
 endsnippet
 
-snippet ngs "ng service" b
+snippet ngservice "ng service" b
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-export class `!p snip.rv = dash2capital(strippedName('service'))`Service{
+export class `!p snip.rv = dash2capital(strippedName('service'))`Service {
 
   constructor(){
     ${0}
@@ -92,9 +147,15 @@ export class `!p snip.rv = dash2capital(strippedName('service'))`Service{
 }
 endsnippet
 
-snippet nginputn "ng input number" b
-@Input('${1}') set _$1($1){ this.$1 = parseInt($1) }
-$1: number ${0};
+snippet nganimation "ng animation" b
+import { query, style, animate, trigger, transition, stagger } from '@angular/animations';
+
+export const `!p snip.rv = dash2capital(strippedName('animation'))`Animation = trigger(`!p snip.rv = strippedName('animation')`, [
+  ${1:transition(':enter', [
+	${2}
+  ]),}
+  ${0}
+]);
 endsnippet
 
 extends html, javascript

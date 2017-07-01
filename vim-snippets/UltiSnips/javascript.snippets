@@ -1,3 +1,19 @@
+global !p
+def name():
+	return vim.eval("expand('%:t')").replace('.js', '')
+
+def dash2capital(text):
+	return ''.join([x.capitalize() for x in text.split('-')])
+
+def dash2camel(text):
+	parts = text.split()
+	return parts[0]+''.join([x.capitalize() for x in parts[1:]])
+endglobal
+
+snippet import "import"
+import { $2 } from '$1';
+endsnippet
+
 snippet print "console.log"
 console.log(${0:'works'})
 endsnippet
@@ -6,4 +22,40 @@ snippet async "async next time"
 setTimeout(_ => {
   $0
 }, 0)
+endsnippet
+
+snippet rpage "react page" b
+import React, { Component } from 'react';
+import { AppRegistry, Text } from 'react-native';
+
+export class `!p snip.rv=dash2capital(name())`Page extends Component {
+  constructor(){
+
+  }
+  render(){
+	const { props } = this.props;
+	return (
+	  <Text>Element</Text>
+	);
+	}
+}
+AppRegistry.registerComponent('`!p snip.rv=name()`-page', () => `!p snip.rv=dash2capital(name())`Page)
+endsnippet
+
+snippet runit "react unit" b
+import React, { Component } from 'react';
+import { AppRegistry, Text } from 'react-native';
+
+export class `!p snip.rv=dash2capital(name())`Unit extends Component {
+  constructor(){
+
+  }
+  render(){
+	const { props } = this.props;
+	return (
+	  <Text>Element</Text>
+	);
+	}
+}
+AppRegistry.registerComponent('`!p snip.rv=name()`', () => `!p snip.rv=dash2capital(name())`Unit)
 endsnippet
