@@ -16,10 +16,6 @@ def name2something(seperator, joiner):
 	pass
 endglobal
 
-snippet import
-import \{${2}} from '${1}';
-endsnippet
-
 snippet mgm "mongo model" b
 import {Schema, createConnection, Document} from 'mongoose'
 import { db } from './${3:db}';
@@ -59,15 +55,10 @@ import \{
 
 @Component({
   selector: '`!p snip.rv=strippedName('component')`',
-  template: \`
-  <div>`!p snip.rv=strippedName('component')` works</div>
-  \`,
-  styles: [\`
-:host\{}
-  \`],
+  template: './`!p snip.rv=strippedName('component')`.component.html',
 })
 export class `!p snip.rv=dash2capital(strippedName('component'))`Component {
-  constructor(){
+  constructor() {
 
   }
 }
@@ -85,7 +76,7 @@ import \{
   moduleId: module.id,
 })
 export class `!p snip.rv=dash2capital(strippedName('page'))`Page {
-  constructor(){}
+  constructor() {}
 }
 endsnippet
 
@@ -101,7 +92,7 @@ import \{
   moduleId: module.id,
 })
 export class `!p snip.rv=dash2capital(strippedName('unit'))`Unit {
-  constructor(){}
+  constructor() {}
 }
 endsnippet
 
@@ -119,7 +110,7 @@ import \{
   moduleId: module.id,
 })
 export class `!p snip.rv=dash2capital(strippedName('widget'))`Widget {
-  constructor(){}
+  constructor() {}
 }
 endsnippet
 
@@ -128,7 +119,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: '`!p snip.rv = dash2camel(strippedName('pipe'))`'})
 export class `!p snip.rv = dash2capital(strippedName('pipe'))`Pipe implements PipeTransform {
-  transform(value: ${1:any}){
+  transform(value: ${1:any}) {
     ${2:return value}
   }
 }
@@ -141,7 +132,7 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class `!p snip.rv = dash2capital(strippedName('service'))`Service {
 
-  constructor(){
+  constructor() {
     ${0}
   }
 }
@@ -156,6 +147,20 @@ export const `!p snip.rv = dash2capital(strippedName('animation'))`Animation = t
   ]),}
   ${0}
 ]);
+endsnippet
+
+snippet ngdirective "ng directive" b
+import {
+  Directive, HostBinding, HostListener,
+  Input, Output, EventEmitter,
+} from '@angular/core';
+
+@Directive({
+  selector: '[`!p snip.rv = strippedName('directive')`]',
+})
+export class `!p snip.rv = dash2capital(strippedName('directive'))`Directive {
+	constructor() {}
+}
 endsnippet
 
 extends html, javascript

@@ -7,7 +7,7 @@ set number
 set guitablabel=%N\ %t
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l
-set clipboard=unnamed
+set clipboard+=unnamedplus
 "}}}
 
 
@@ -37,7 +37,6 @@ set incsearch
 " <Ctrl-L> remove not only hightlighting but also the term completely
 nmap S <nop>
 nnoremap Q @q
-nnoremap * *#
 nnoremap <silent> <C-L> :nohl<CR>
 nnoremap <silent> <C-l> :let @/ = ""<CR>
 vmap J 5j
@@ -51,6 +50,12 @@ nnoremap gV `[v`]
 set noswapfile
 set nobackup
 set nowritebackup
+
+" mapping the window movement
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " warping
 set wrap
@@ -144,18 +149,42 @@ Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-user'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-fold'
+Plug 'haya14busa/vim-operator-flashy'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'rbonvall/vim-textobj-latex', {'for': ['tex']}
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-let g:splitjoin_join_mapping = 'J'
-nnoremap S :SplitjoinSplit<CR>
+Plug 'alvan/vim-closetag'
+Plug 'rhysd/conflict-marker.vim'
 Plug 'godlygeek/tabular'
 Plug 'easymotion/vim-easymotion'
-map gw <Plug>(easymotion-bd-w)
+map gw <Plug>(easymotion-s)
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_shade = 1
+Plug 'justinmk/vim-sneak'
+map s <Plug>Sneak_s
+map S <Plug>Sneak_S
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+map /  <Plug>(incsearch-forward)
+map g/ <Plug>(incsearch-stay)
+map z/ <Plug>(incsearch-fuzzy-/)
+map zg/ <Plug>(incsearch-fuzzy-stay)
+
+Plug 'haya14busa/vim-asterisk'
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
+
+" Plug 'maxbrunsfeld/vim-yankstack'
+
 " }}}
 
 " window manipulation {{{
@@ -178,8 +207,11 @@ Plug 'benjifisher/matchit.zip'
 Plug 'sickill/vim-pasta'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
+
 Plug 'danro/rename.vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'airblade/vim-matchquote'
 highlight ExtraWhitespace ctermbg=Black
 autocmd BufWritePre * StripWhitespace
 " }}}
@@ -334,7 +366,7 @@ let g:UltiSnipsEditSplit = 'vertical'
 " syntax section {{{
 Plug 'vim-scripts/SyntaxRange'
 " programming languages
-Plug 'arakashic/chromatica.nvim', {'for': ['c++', 'c']}
+Plug 'arakashic/chromatica.nvim', {'for': ['c++', 'c', 'vim']}
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c++']}
 Plug 'othree/html5.vim', {'for': ['html']}
 Plug 'hail2u/vim-css3-syntax', {'for': ['css']}
@@ -413,6 +445,8 @@ Plug 'diepm/vim-rest-console'
 Plug 'sunaku/vim-dasht'
 Plug 'zenbro/mirror.vim'
 Plug 'bfredl/nvim-ipy', {'for': ['python', 'vim']}
+Plug 'jacob-ogre/vim-syncr'
+Plug 'metakirby5/codi.vim'
 let g:nvim_ipy_perform_mapping = 0
 " }}}
 
@@ -425,4 +459,6 @@ syntax on
 
 colorscheme material_bright
 autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
+
+
 
