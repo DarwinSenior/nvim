@@ -5,6 +5,9 @@ def filename():
 def strippedName(x):
 	return filename().replace('.%s.ts'%x, '')
 
+def underscore2capital(text):
+	return ''.join([x.capitalize() for x in text.split('_')])
+
 def dash2capital(text):
 	return ''.join([x.capitalize() for x in text.split('-')])
 
@@ -161,6 +164,20 @@ import {
 export class `!p snip.rv = dash2capital(strippedName('directive'))`Directive {
 	constructor() {}
 }
+endsnippet
+
+snippet nuxtstore "nuxt vuex store" b
+export interface `!p snip.rv=underscore2capital(filename().replace('.ts', ''))` {
+
+}
+
+export const state = () => ({});
+
+export const getters = {};
+
+export const actions = {};
+
+export const mutations = {};
 endsnippet
 
 extends html, javascript

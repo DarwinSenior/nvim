@@ -8,11 +8,11 @@ set guitablabel=%N\ %t
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l
 set clipboard+=unnamedplus
+set nowrap
 "}}}
 
-
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = '/usr/local/bin/python2'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 let g:mapleader = ' '
 let g:maplocalleader = ','
@@ -37,12 +37,6 @@ set incsearch
 " <Ctrl-L> remove not only hightlighting but also the term completely
 nmap S <nop>
 nnoremap Q @q
-nnoremap <silent> <C-L> :nohl<CR>
-nnoremap <silent> <C-l> :let @/ = ""<CR>
-vmap J 5j
-vmap K 5k
-vmap H 5h
-vmap L 5l
 nnoremap gV `[v`]
 " }}}
 
@@ -102,7 +96,8 @@ autocmd FileType netrw nnoremap <silent> <buffer> <ESC> <C-^>
 " for appearance {{{
 Plug 'crusoexia/vim-monokai'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'darwinsenior/tender.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'mhartington/oceanic-next'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -112,7 +107,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#nrrwrgn#enabled = 1
 let g:airline#extensions#capslock#enabled = 1
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 
 " Plug 'chriskempson/base16-vim'
 " Plug 'w0ng/vim-hybrid'
@@ -155,6 +150,7 @@ Plug 'rbonvall/vim-textobj-latex', {'for': ['tex']}
 Plug 'wellle/targets.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'alvan/vim-closetag'
+let g:closetag_filenames = '*.html,*.component.ts,*.vue'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'godlygeek/tabular'
 Plug 'easymotion/vim-easymotion'
@@ -221,15 +217,15 @@ Plug 'Chiel92/vim-autoformat'
 nmap <Leader><Leader><Leader> :Autoformat<CR>
 let g:autoformat_verbosemode = 1
 
-Plug 'w0rp/ale'
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
-let g:ale_linters = {}
-nmap <silent> [l <Plug>(ale_previous_wrap)
-nmap <silent> ]l <Plug>(ale_next_wrap)
+" Plug 'w0rp/ale'
+" let g:ale_sign_column_always = 1
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_enter = 0
+" let g:ale_sign_error = ''
+" let g:ale_sign_warning = ''
+" let g:ale_linters = {}
+" nmap <silent> [l <Plug>(ale_previous_wrap)
+" nmap <silent> ]l <Plug>(ale_next_wrap)
 
 " }}}
 
@@ -238,7 +234,6 @@ Plug 'Shougo/vimproc.vim', {'do': 'make'}
 Plug 'Shougo/denite.nvim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'jreybert/vimagit'
-Plug 'derekwyatt/vim-fswitch'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -254,48 +249,82 @@ nnoremap <Leader>tt :Denite outline<CR>
 "}}}
 
 " completion {{{
-Plug 'ervandew/supertab'
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/neopairs.vim'
-Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neoinclude.vim'
-Plug 'ujihisa/neco-look', {'for': ['markdown', 'txt', 'tex']}
-Plug 'Shougo/echodoc.vim'
-Plug 'autozimu/LanguageClient-neovim', {'for': []}
+" Plug 'roxma/nvim-completion-manager'
+" Plug 'Shougo/deoplete.nvim'
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#enable_debug = 1
-let g:deoplete#enable_profile = 1
+Plug 'roxma/nvim-completion-manager'
+Plug 'ervandew/supertab'
+Plug 'Shougo/echodoc.vim'
+Plug 'Shougo/neco-syntax'
+Plug 'autozimu/LanguageClient-neovim'
+let g:cm_refresh_length = 1
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
 let g:SuperTabDefaultCompletionType = '<c-n>'
 let g:LanguageClient_serverCommands = {
+            \ 'lua': ['lua-lsp'],
             \ 'dart': ['dart_language_server'],
+            \ 'ruby': ['language_server-ruby'],
             \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'typescript': ['javascript-typescript-stdio'],
-            \ 'go': ['go-langserver']
+            \ 'typescript': ['typescript-language-server', '--stdio'],
+            \ 'json': ['json-languageserver', '--stdio'],
+            \ 'haskell': ['hie', '--lsp'],
+            \ 'go': ['go-langserver'],
+            \ 'python': ['pyls'],
+            \ 'vue': ['vls'],
+            \ 'cpp': ['clangd'],
             \}
 let g:LanguageClient_autoStart = 1
-" nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
-Plug 'zchee/deoplete-zsh'
-Plug 'zchee/deoplete-jedi', {'for': ['python'], 'do': 'pip install --user jedi'}
-Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-Plug 'eagletmt/neco-ghc', {'for': ['haskell']}
-Plug 'bitc/vim-hdevtools', {'for': ['haskell']}
-Plug 'zchee/deoplete-go', { 'do': 'make', 'for': ['go']}
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
-Plug 'zchee/deoplete-clang', {'for': ['c', 'cpp', 'h']}
-let g:deoplete#sources#clang#debug = v:true
-" Plug 'carlitux/deoplete-ternjs', {'for': ['javascript'], 'do': 'npm install -g tern'}
-Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'vim'], 'do': 'npm install -g typescript'}
-Plug 'wokalski/autocomplete-flow', {'for': ['javascript', 'javascript.jsx']}
-Plug 'racer-rust/vim-racer', {'for': ['rust']}
-let g:racer_experimental_completer = 1
-let g:neosnippet#enable_completed_snippet = 0
+" Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'vim'], 'do': 'npm install -g typescript'}
+" }}}
 
+" syntax section {{{
+Plug 'vim-scripts/SyntaxRange'
+" programming languages
+Plug 'arakashic/chromatica.nvim', {'for': ['cpp', 'c', 'vim']}
+Plug 'jparise/vim-graphql'
+let g:chromatica#libclang_path = '/usr/local/opt/llvm/lib'
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp']}
+Plug 'othree/html5.vim', {'for': ['html', 'vue']}
+Plug 'hail2u/vim-css3-syntax', {'for': ['css', 'scss', 'vue']}
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'vue'] }
+Plug 'digitaltoad/vim-pug', { 'for': ['pug', 'vue'] }
+" Plug 'othree/yajs.vim', {'for': ['javascript']}
+Plug 'pangloss/vim-javascript', {'for': ['javascript']}
+Plug 'mxw/vim-jsx', {'for': ['javascript']}
+" Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript', 'vue']}
+Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'vue']}
+Plug 'kh3phr3n/python-syntax', {'for': ['python']}
+Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'posva/vim-vue', { 'for': ['vue'] }
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'wavded/vim-stylus'
+Plug 'cespare/vim-toml', {'for': ['toml']}
+let g:rust_fold = 1
+let g:python_highlight_all = 1
+let g:chromatica#enable_at_startup=1
+let g:jsx_ext_required = 0
+" text files
+Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
+Plug 'lervag/vimtex', {'for': ['tex']}
+" config files
+Plug 'chiphogg/vim-prototxt', {'for': ['prototxt']}
+Plug 'PotatoesMaster/i3-vim-syntax', {'for': ['i3']}
+Plug 'stephpy/vim-yaml', {'for': ['yaml']}
+Plug 'elzr/vim-json', {'for': ['json']}
+Plug 'dzeban/vim-log-syntax', {'for': ['log']}
+Plug 'chrisbra/csv.vim', {'for': ['csv']}
+let g:vim_markdown_math = 1
+
+Plug 'chrisbra/NrrwRgn'
+command! -nargs=* -bang -range -complete=filetype NN
+            \ :<line1>,<line2> call nrrwrgn#NrrwRgn('',<q-bang>)
+            \ | set filetype=<args>
+Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml', 'typescript', 'javascript']}
+Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
+let g:colorizer_auto_filetype = 'css,html'
 " }}}
 
 " folding {{{
@@ -363,46 +392,6 @@ let g:UltiSnipsEditSplit = 'vertical'
 
 " }}}
 
-" syntax section {{{
-Plug 'vim-scripts/SyntaxRange'
-" programming languages
-Plug 'arakashic/chromatica.nvim', {'for': ['c++', 'c', 'vim']}
-Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c++']}
-Plug 'othree/html5.vim', {'for': ['html']}
-Plug 'hail2u/vim-css3-syntax', {'for': ['css']}
-" Plug 'othree/yajs.vim', {'for': ['javascript']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript']}
-Plug 'mxw/vim-jsx', {'for': ['javascript']}
-" Plug 'HerringtonDarkholme/yats.vim', {'for': ['typescript']}
-Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
-Plug 'kh3phr3n/python-syntax', {'for': ['python']}
-Plug 'rust-lang/rust.vim', {'for': ['rust']}
-Plug 'cespare/vim-toml', {'for': ['toml']}
-let g:rust_fold = 1
-let g:python_highlight_all = 1
-let g:chromatica#enable_at_startup=1
-let g:jsx_ext_required = 0
-" text files
-Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
-Plug 'lervag/vimtex', {'for': ['tex']}
-" config files
-Plug 'chiphogg/vim-prototxt', {'for': ['prototxt']}
-Plug 'PotatoesMaster/i3-vim-syntax', {'for': ['i3']}
-Plug 'stephpy/vim-yaml', {'for': ['yaml']}
-Plug 'elzr/vim-json', {'for': ['json']}
-Plug 'dzeban/vim-log-syntax', {'for': ['log']}
-Plug 'chrisbra/csv.vim', {'for': ['csv']}
-let g:vim_markdown_math = 1
-
-Plug 'chrisbra/NrrwRgn'
-command! -nargs=* -bang -range -complete=filetype NN
-            \ :<line1>,<line2> call nrrwrgn#NrrwRgn('',<q-bang>)
-            \ | set filetype=<args>
-Plug 'Valloric/MatchTagAlways', {'for': ['html', 'xml', 'typescript', 'javascript']}
-Plug 'chrisbra/Colorizer', {'for': ['vim', 'css', 'html']}
-let g:colorizer_auto_filetype = 'css,html'
-" }}}
-
 " writing documentation {{{
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown', 'notes']}
 let g:table_mode_corner="|"
@@ -447,18 +436,18 @@ Plug 'zenbro/mirror.vim'
 Plug 'bfredl/nvim-ipy', {'for': ['python', 'vim']}
 Plug 'jacob-ogre/vim-syncr'
 Plug 'metakirby5/codi.vim'
+Plug 'parkr/vim-jekyll'
 let g:nvim_ipy_perform_mapping = 0
+let g:jekyll_post_template = []
+let g:jekyll_post_filetype = 'asciidoc'
+let g:jekyll_post_extension = '.adoc'
 " }}}
 
-let g:envimdevtools_customcss = '~/.config/nvim/custom.css'
-Plug '~/workspace/envim-tools'
-Plug '~/workspace/envim-capture'
 call plug#end()
 filetype plugin indent on
 syntax on
 
-colorscheme material_bright
+let oceanic_next_terminal_bold = 1
+let oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 autocmd BufNewFile,BufRead *.muttrc setfiletype muttrc
-
-
-

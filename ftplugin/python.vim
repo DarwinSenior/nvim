@@ -1,8 +1,7 @@
 setlocal nofoldenable
 setlocal foldlevelstart=0
 
-let g:ale_linters.python = 'pylint'
-" let g:neomake_python_enabled_makers = ['pylint']
+" let g:ale_linters.python = 'pylint'
 " autocmd! BufWritePost *.py Neomake
 nnoremap gt :TagbarToggle<CR>
 map <silent> K <Plug>(IPy-WordObjInfo)

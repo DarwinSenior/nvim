@@ -1,0 +1,74 @@
+extends typescript
+
+global !p
+def filename():
+	return vim.eval("expand('%:t')")
+
+def strippedName():
+	return filename().replace('.vue', '')
+
+def dash2capital(text):
+	return ''.join([x.capitalize() for x in text.split('-')])
+
+def dash2camel(text):
+	parts = text.split()
+	return parts[0]+''.join([x.capitalize() for x in parts[1:]])
+
+def name2something(seperator, joiner):
+	pass
+endglobal
+
+snippet vue "vue template"
+<style scoped>
+</style>
+<template>
+  <div> nothing </div>
+</template>
+<script lang="ts">
+import {
+	Component,
+	Prop,
+	Vue,
+} from 'vue-property-decorator';
+
+@Component
+export default class `!p snip.rv=dash2capital(strippedName())` extends Vue {
+}
+</script>
+
+endsnippet
+
+snippet nuxtpage "vue template"
+<style lang="scss">
+</style>
+<template lang="pug">
+  div nothing
+</template>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'nuxt-class-component';
+
+@Component
+export default class `!p snip.rv=dash2capital(strippedName())`Page extends Vue {
+}
+</script>
+
+endsnippet
+
+snippet nuxtcomponent "vue template"
+<style lang="scss">
+</style>
+<template lang="pug">
+  div nothing
+</template>
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'nuxt-class-component';
+import { Prop, Watch } from 'vue-property-decorator';
+
+@Component
+export default class `!p snip.rv=dash2capital(strippedName())`Component extends Vue {
+}
+</script>
+
+endsnippet
